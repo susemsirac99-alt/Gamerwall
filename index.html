@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerWall | 4K & 8K Gaming Wallpapers Store</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --accent-neon: #00ffcc;
+            --accent-purple: #9d4edd;
+            --accent-pink: #ff007f;
+            --text-main: #edf5e1;
+            --text-muted: #c5c6c7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Bar / Announcement */
+        .top-bar {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            text-align: center;
+            padding: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Navbar */
+        nav {
+            background: rgba(15, 15, 22, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .brand-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent-neon);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
+        }
+
+        .search-box {
+            position: relative;
+            width: 35%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            background: #12131c;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-neon);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .cart-btn {
+            position: relative;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--accent-pink);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* Hero Showcase */
+        .hero {
+            background: linear-gradient(rgba(11, 12, 16, 0.7), rgba(11, 12, 16, 1)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop') center/cover;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 25px auto;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: #181925;
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .cat-btn:hover, .cat-btn.active {
+            background: var(--accent-neon);
+            color: #000;
+            border-color: var(--accent-neon);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        /* Wallpaper Grid */
+        .main-container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-neon);
+            box-shadow: 0 10px 25px rgba(0, 255, 204, 0.15);
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent-pink);
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            border-radius: 12px;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .card-body {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent-neon);
+            font-weight: 700;
+        }
+
+        .btn-buy {
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-buy:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: #07070a;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 40px 20px 20px 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding-bottom: 30px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-neon);
+            margin-bottom: 10px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-neon);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .search-box { display: none; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        ⚡ SEZON İNDİRİMİ: TÜM 4K WALLPAPER PAKETLERİNDE %30 İNDİRİM!
+    </div>
+
+    <nav>
+        <a href="#" class="brand-logo">
+            <i class="fa-solid fa-gamepad"></i> GAMERWALL
+        </a>
+
+        <div class="search-box">
+            <input type="text" placeholder="Wallpaper veya oyun ara...">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div class="nav-actions">
+            <button class="cart-btn" onclick="alert('Sepetiniz henüz boş!')">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>SETUP'INIZA GELECEK DOKUNUŞ</h1>
+        <p>En popüler oyunlar, neon siber şehirler ve minimalist ultra HD duvar kâğıtları koleksiyonu.</p>
+        
+        <div class="categories">
+            <button class="cat-btn active">Tümü</button>
+            <button class="cat-btn">Cyberpunk & Neon</button>
+            <button class="cat-btn">Anime & Game</button>
+            <button class="cat-btn">Minimalist</button>
+            <button class="cat-btn">Cars & Racing</button>
+        </div>
+    </section>
+
+    <main class="main-container">
+        <div class="grid">
+            
+            <!-- Kart 1 -->
+            <div class="card">
+                <span class="badge">EN ÇOK SATAN</span>
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop" alt="Cyberpunk City">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Cyberpunk Neon City 4K</h3>
+                    <p class="card-desc">Gece ortamları ve çift monitör setup'ları için mükemmel ultra detaylı görsel.</p>
+                    <div class="card-footer">
+                        <span class="price">49.99 ₺</span>
+                        <button class="btn-buy" onclick="alert('Sepete eklendi!')">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kart 2 -->
+            <div class="card">
+                <span class="badge">YENİ</span>
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop" alt="Anime Style">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Tokyo Drift & Neon Rain</h3>
+                    <p class="card-desc">JDM tutkunları ve sokak yarışı severler için hazırlanan özel 4K tasarım.</p>
+                    <div class="card-footer">
+                        <span class="price">39.99 ₺</span>
+                        <button class="btn-buy" onclick="alert('Sepete eklendi!')">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kart 3 -->
+            <div class="card">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Abstract Space">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Abstract Deep Space 8K</h3>
+                    <p class="card-desc">Göz yormayan, karanlık tema odaklı soyut galaksi duvar kâğıdı.</p>
+                    <div class="card-footer">
+                        <span class="price">29.99 ₺</span>
+                        <button class="btn-buy" onclick="alert('Sepete eklendi!')">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kart 4 -->
+            <div class="card">
+                <span class="badge">%25 İNDİRİM</span>
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Retro Gaming">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Retro Synthwave Arcade</h3>
+                    <p class="card-desc">80'ler synthwave ve nostaljik gamer atmosferini sevenler için.</p>
+                    <div class="card-footer">
+                        <span class="price">34.99 ₺</span>
+                        <button class="btn-buy" onclick="alert('Sepete eklendi!')">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-gamepad"></i> GAMERWALL</h3>
+                <p>Oyuncular ve tasarım meraklıları için yüksek çözünürlüklü dijital içerik mağazası.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Kurumsal</h4>
+                <ul>
+                    <li><a href="#">Hakkımızda</a></li>
+                    <li><a href="#">Gizlilik Politikası</a></li>
+                    <li><a href="#">Kullanım Şartları</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Destek</h4>
+                <ul>
+                    <li><a href="#">İletişim & SSS</a></li>
+                    <li><a href="#">Nasıl İndirilir?</a></li>
+                    <li><a href="#">Ödeme Yöntemleri</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2026 GamerWall Inc. Tüm hakları saklıdır. Marka ön plandadır.
+        </div>
+    </footer>
+
+</body>
+</html>
