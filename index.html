@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerWall | Profesyonel 4K & 8K Gaming Wallpapers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #08090d;
+            --card-bg: #14161f;
+            --accent-neon: #00ffcc;
+            --accent-purple: #9d4edd;
+            --accent-pink: #ff007f;
+            --text-main: #f0f2f5;
+            --text-muted: #9ba1a6;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+
+        .top-bar {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+            color: white; text-align: center; padding: 7px; font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px;
+        }
+
+        nav {
+            background: rgba(8, 9, 13, 0.95); backdrop-filter: blur(12px);
+            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand-logo {
+            font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900;
+            color: var(--accent-neon); text-decoration: none; display: flex; align-items: center; gap: 10px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        }
+
+        .search-box { position: relative; width: 30%; }
+        .search-box input {
+            width: 100%; padding: 10px 40px 10px 18px; background: #12141c;
+            border: 1px solid var(--border-color); border-radius: 25px; color: white; outline: none; transition: 0.3s; font-size: 0.9rem;
+        }
+        .search-box input:focus { border-color: var(--accent-neon); box-shadow: 0 0 12px rgba(0, 255, 204, 0.25); }
+        .search-box i { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+
+        .nav-actions { display: flex; align-items: center; gap: 15px; }
+        .nav-btn {
+            background: #181b26; border: 1px solid var(--border-color); color: var(--text-main);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .nav-btn:hover { border-color: var(--accent-neon); color: var(--accent-neon); }
+
+        .cart-btn-nav {
+            position: relative; background: #181b26; border: 1px solid var(--border-color); color: var(--text-main);
+            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; font-size: 1.1rem;
+        }
+        .cart-btn-nav:hover { border-color: var(--accent-neon); color: var(--accent-neon); }
+        .cart-count {
+            position: absolute; top: -5px; right: -5px; background: var(--accent-pink);
+            color: white; font-size: 0.7rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(8, 9, 13, 0.6), rgba(8, 9, 13, 1)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1600&auto=format&fit=crop') center/cover;
+            padding: 60px 20px; text-align: center; border-bottom: 1px solid var(--border-color);
+        }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; margin-bottom: 12px; letter-spacing: 2px; }
+        .hero p { color: var(--text-muted); font-size: 1rem; max-width: 600px; margin: 0 auto 30px auto; }
+
+        .categories { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .cat-btn {
+            background: #14161f; color: var(--text-muted); border: 1px solid var(--border-color);
+            padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: 0.3s;
+        }
+        .cat-btn:hover, .cat-btn.active {
+            background: var(--accent-neon); color: #000; border-color: var(--accent-neon);
+            box-shadow: 0 0 12px rgba(0, 255, 204, 0.3);
+        }
+
+        .main-container { max-width: 1300px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+
+        .card {
+            background: var(--card-bg); border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--border-color); transition: all 0.3s ease;
+            position: relative; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-6px); border-color: var(--accent-neon); box-shadow: 0 10px 25px rgba(0, 255, 204, 0.15); }
+        .card.hidden { display: none !important; }
+
+        .badge {
+            position: absolute; top: 12px; left: 12px; background: var(--accent-pink);
+            color: white; padding: 4px 10px; font-size: 0.7rem; border-radius: 10px; font-weight: 700; z-index: 2;
+        }
+
+        .img-wrapper { position: relative; width: 100%; height: 190px; overflow: hidden; }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .card:hover .img-wrapper img { transform: scale(1.08); }
+
+        .card-body { padding: 18px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+        .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+        .card-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.4; }
+
+        .card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .price { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; color: var(--accent-neon); font-weight: 700; }
+
+        .btn-buy {
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+            color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; font-size: 0.85rem;
+        }
+        .btn-buy:hover { opacity: 0.9; }
+
+        /* Modal Pencereleri Tasarımı */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 200; align-items: center; justify-content: center; padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: #14161f; border: 1px solid var(--accent-neon); border-radius: 18px;
+            max-width: 520px; width: 100%; padding: 30px; position: relative; color: var(--text-main);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto;
+        }
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;
+        }
+        .close-btn:hover { color: var(--accent-pink); }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+        .form-group input {
+            width: 100%; padding: 11px 15px; background: #0c0e14; border: 1px solid var(--border-color);
+            border-radius: 10px; color: white; outline: none; font-size: 0.9rem;
+        }
+        .form-group input:focus { border-color: var(--accent-neon); }
+
+        .submit-btn {
+            width: 100%; background: var(--accent-neon); color: #000; border: none; padding: 12px;
+            border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.95rem; margin-top: 10px; transition: 0.3s;
+        }
+        .submit-btn:hover { opacity: 0.85; box-shadow: 0 0 15px rgba(0,255,204,0.4); }
+
+        /* Sepet Tablosu & Kupon */
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        .coupon-section { display: flex; gap: 10px; margin: 15px 0; }
+        .coupon-section input { flex: 1; padding: 8px 12px; background: #0c0e14; border: 1px solid var(--border-color); border-radius: 8px; color: white; font-size: 0.85rem; }
+        .coupon-btn { background: var(--accent-purple); color: white; border: none; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+
+        footer { background: #050608; border-top: 1px solid var(--border-color); padding: 40px 20px 20px 20px; margin-top: 60px; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; padding-bottom: 30px; }
+        .footer-brand h3 { font-family: 'Orbitron', sans-serif; color: var(--accent-neon); margin-bottom: 10px; }
+        .footer-brand p { color: var(--text-muted); font-size: 0.85rem; max-width: 280px; line-height: 1.5; }
+        .footer-links h4 { margin-bottom: 12px; color: white; font-size: 0.95rem; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 8px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+        .footer-links a:hover { color: var(--accent-neon); }
+        .footer-bottom { text-align: center; border-top: 1px solid var(--border-color); padding-top: 20px; color: var(--text-muted); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">🔥 ÖZEL KAMPANYA: "GAMER30" KUPON KODU İLE SEPETTE %30 İNDİRİM KAZAN!</div>
+
+    <nav>
+        <a href="#" class="brand-logo"><i class="fa-solid fa-gamepad"></i> GAMERWALL</a>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Wallpaper veya oyun ara..." onkeyup="searchWallpapers()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="openModal('authModal')"><i class="fa-solid fa-user"></i> <span id="userNavText">Giriş Yap</span></button>
+            <div class="cart-btn-nav" onclick="openCartModal()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>SETUP'INA PROFESYONEL DOKUNUŞ</h1>
+        <p>En kaliteli 4K ve 8K oyuncu duvar kâğıtları ile masaüstünü tamamen yenile.</p>
+        
+        <div class="categories">
+            <button class="cat-btn active" onclick="filterCategory('all', this)">Tümü</button>
+            <button class="cat-btn" onclick="filterCategory('cyberpunk', this)">Cyberpunk</button>
+            <button class="cat-btn" onclick="filterCategory('anime', this)">Anime & Manga</button>
+            <button class="cat-btn" onclick="filterCategory('space', this)">Uzay & Soyut</button>
+            <button class="cat-btn" onclick="filterCategory('cars', this)">Cars & JDM</button>
+            <button class="cat-btn" onclick="filterCategory('nature', this)">Doğa & Atmosfer</button>
+        </div>
+    </section>
+
+    <main class="main-container">
+        <div class="grid" id="wallpaperGrid">
+            
+            <div class="card" data-category="cyberpunk">
+                <span class="badge">EN ÇOK SATAN</span>
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=600&auto=format&fit=crop" alt="Cyberpunk"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Cyberpunk Neon City 4K</h3>
+                    <p class="card-desc">Gece ortamları ve çift monitör setup'ları için yüksek kaliteli neon detaylar.</p>
+                    <div class="card-footer">
+                        <span class="price">49.99 ₺</span>
+                        <button class="btn-buy" onclick="addToCart('Cyberpunk Neon City 4K', 49.99)">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="cars">
+                <span class="badge">YENİ</span>
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop" alt="Tokyo Drift"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Tokyo Drift & Neon Rain</h3>
+                    <p class="card-desc">JDM tutkunları ve sokak yarışçısı ruhunu sevenler için özel 4K tasarım.</p>
+                    <div class="card-footer">
+                        <span class="price">39.99 ₺</span>
+                        <button class="btn-buy" onclick="addToCart('Tokyo Drift & Neon Rain', 39.99)">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="space">
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Deep Space"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Abstract Deep Space 8K</h3>
+                    <p class="card-desc">Göz yormayan, OLED ekranlar için optimize edilmiş koyu tonlu galaksi görseli.</p>
+                    <div class="card-footer">
+                        <span class="price">29.99 ₺</span>
+                        <button class="btn-buy" onclick="addToCart('Abstract Deep Space 8K', 29.99)">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="anime">
+                <span class="badge">%25 İNDİRİM</span>
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=600&auto=format&fit=crop" alt="Anime"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Neon Anime Vibe</h3>
+                    <p class="card-desc">Japon estetiği ve pastel neon renklerle hazırlanmış konsept duvar kâğıdı.</p>
+                    <div class="card-footer">
+                        <span class="price">34.99 ₺</span>
+                        <button class="btn-buy" onclick="addToCart('Neon Anime Vibe', 34.99)">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="nature">
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop" alt="Mistik Orman"></div>
+                <div class="card-body">
+                    <h3 class="card-title">Mistik Sisli Orman</h3>
+                    <p class="card-desc">Doğa severler için sakinleştirici yeşil ve sis efektli yüksek çözünürlüklü tema.</p>
+                    <div class="card-footer">
+                        <span class="price">24.99 ₺</span>
+                        <button class="btn-buy" onclick="addToCart('Mistik Sisli Orman', 24.99)">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="cyberpunk">
+                <span class="badge">TREND</span>
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" alt="Gaming Setup"></div>
+                <div class="card-body">
+                    <h3 class="card-title">RGB Battlestation Concept</h3>
+                    <p class="card-desc">En üst düzey oyuncu odalarından ilham alınarak tasarlanmış şık masaüstü aracı.</p>
+                    <div class="card-footer">
+                        <span class="price">44.99 ₺</span>
+                        <button class="btn-buy" onclick="addToCart('RGB Battlestation Concept', 44.99)">Satın Al</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-gamepad"></i> GAMERWALL</h3>
+                <p>Oyuncular ve masaüstü tasarımı tutkunları için yüksek çözünürlüklü dijital içerik mağazası platformu.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Kurumsal</h4>
+                <ul>
+                    <li><a onclick="openModal('hakkimizdaModal')">Hakkımızda</a></li>
+                    <li><a onclick="openModal('gizlilikModal')">Gizlilik Politikası</a></li>
+                    <li><a onclick="openModal('sartlarModal')">Kullanım Şartları</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Destek & İletişim</h4>
+                <ul>
+                    <li><a onclick="openModal('iletisimModal')">Bize Ulaşın / SSS</a></li>
+                    <li><a onclick="openModal('iadeModal')">İade ve Değişim Koşulları</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 GamerWall Inc. Tüm hakları saklıdır. Güvenli Ödeme Altyapısı.</div>
+    </footer>
+
+    <!-- ÜYE GİRİŞ / KAYIT MODALI -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('authModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 20px; font-family: 'Orbitron', sans-serif;">GamerWall Hesap</h2>
+            <div class="form-group">
+                <label>E-Posta Adresi</label>
+                <input type="email" id="loginEmail" placeholder="ornek@mail.com">
+            </div>
+            <div class="form-group">
+                <label>Şifre</label>
+                <input type="password" id="loginPass" placeholder="******">
+            </div>
+            <button class="submit-btn" onclick="handleLogin()">Giriş Yap / Üye Ol</button>
+        </div>
+    </div>
+
+    <!-- GELİŞMİŞ SEPET & ÖDEME MODALI -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cartModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Alışveriş Sepeti</h2>
+            <div id="cartItemsContainer" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
+                <p style="color: var(--text-muted); text-align: center; padding: 20px;">Sepetiniz şu an boş.</p>
+            </div>
+            
+            <div class="coupon-section">
+                <input type="text" id="couponInput" placeholder="Kupon Kodu (Örn: GAMER30)">
+                <button class="coupon-btn" onclick="applyCoupon()">Uygula</button>
+            </div>
+
+            <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Ara Toplam:</span>
+                    <span id="subTotal">0.00 ₺</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">İndirim:</span>
+                    <span id="discountAmount" style="color: var(--accent-pink);">0.00 ₺</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; margin-bottom: 20px;">
+                    <span>Toplam Tutar:</span>
+                    <span id="finalTotal" style="color: var(--accent-neon);">0.00 ₺</span>
+                </div>
+                <button class="submit-btn" onclick="checkoutOrder()" id="checkoutBtn" style="display:none;">Siparişi Tamamla & İndir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- KURUMSAL MODALLER -->
+    <div class="modal" id="hakkimizdaModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('hakkimizdaModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Hakkımızda</h2>
+            <p style="line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">GamerWall, oyuncuların ve yüksek performanslı masaüstü kurulumu (battlestation) kurmak isteyenlerin en kaliteli 4K/8K görsellere tek tıkla ulaşması amacıyla 2026 yılında kurulmuş yeni nesil dijital içerik platformudur. En özgün Cyberpunk, anime ve uzay temalı tasarımları titizlikle seçerek ekranlarınıza getiriyoruz.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="gizlilikModal">
+        <div class="modal-content">
+            <span class="close-def" onclick="closeModal('gizlilikModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Gizlilik Politikası</h2>
+            <p style="line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">Kullanıcı gizliliği bizim için en üst düzeyde önem taşır. Alışveriş sırasında paylaşılan kişisel verileriniz ve e-posta bilgileriniz 3. şahıslarla asla paylaşılmaz. Ödeme adımları 256-bit SSL sertifikalı güvenli yapılarla korunmaktadır.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="sartlarModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('sartlarModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Kullanım Şartları</h2>
+            <p style="line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">GamerWall üzerinden satın alınan veya indirilen tüm dijital wallpaper dosyaları yalnızca kişisel kullanım içindir. Görsellerin internet sitelerinde izinsiz ticari satışı veya kopyalanması yasaktır.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="iletisimModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('iletisimModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">Bize Ulaşın</h2>
+            <p style="line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">Sorularınız, önerileriniz veya destek talepleriniz için bize 7/24 aşağıdaki kanallardan ulaşabilirsiniz:<br><br>
+            📧 E-Posta: destek@gamerwall.com<br>
+            💬 Discord: discord.gg/gamerwall<br>
+            📍 Merkez: Teknoloji Vadisi, İstanbul</p>
+        </div>
+    </div>
+
+    <div class="modal" id="iadeModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('iadeModal')">&times;</span>
+            <h2 style="color: var(--accent-neon); margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">İade ve Değişim</h2>
+            <p style="line-height: 1.6; color: var(--text-muted); font-size: 0.9rem;">Dijital ürünlerin yapısı gereği, dosyalar hesaba indirildikten sonra iade işlemi yasal olarak yapılamamaktadır. Ancak dosya bozukluğu veya indirme hatalarında birebir destek sağlanmaktadır.</p>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let discountRate = 0;
+        let currentUser = null;
+
+        function filterCategory(category, element) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function searchWallpapers() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function addToCart(title, price) {
+            cart.push({ title, price });
+            document.getElementById('cartCount').innerText = cart.length;
+            alert('"' + title + '" sepete eklendi!');
+        }
+
+        function openCartModal() {
+            updateCartUI();
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">Sepetiniz şu an boş.</p>';
+                document.getElementById('subTotal').innerText = '0.00 ₺';
+                document.getElementById('discountAmount').innerText = '0.00 ₺';
+                document.getElementById('finalTotal').innerText = '0.00 ₺';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+
+            checkoutBtn.style.display = 'block';
+            let html = '';
+            let subTotal = 0;
+
+            cart.forEach((item, index) => {
+                subTotal += item.price;
+                html += `
+                    <div class="cart-item-row">
+                        <span>${item.title}</span>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-family: Orbitron; color: var(--accent-neon);">${item.price.toFixed(2)} ₺</span>
+                            <i class="fa-solid fa-trash" style="color: var(--accent-pink); cursor: pointer;" onclick="removeFromCart(${index})"></i>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            let discount = subTotal * discountRate;
+            let final = subTotal - discount;
+
+            document.getElementById('subTotal').innerText = subTotal.toFixed(2) + ' ₺';
+            document.getElementById('discountAmount').innerText = '-' + discount.toFixed(2) + ' ₺';
+            document.getElementById('finalTotal').innerText = final.toFixed(2) + ' ₺';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            document.getElementById('cartCount').innerText = cart.length;
+            updateCartUI();
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponInput').value.trim();
+            if (code.toUpperCase() === 'GAMER30') {
+                discountRate = 0.30;
+                alert('Tebrikler! %30 indirim kuponu uygulandı.');
+                updateCartUI();
+            } else {
+                alert('Geçersiz kupon kodu!');
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            if (email) {
+                currentUser = email;
+                document.getElementById('userNavText').innerText = email.split('@')[0];
+                closeModal('authModal');
+                alert('Başarıyla giriş yapıldı!');
+            } else {
+                alert('Lütfen geçerli bir e-posta girin.');
+            }
+        }
+
+        function checkoutOrder() {
+            if (!currentUser) {
+                alert('Sipariş vermek için lütfen önce Giriş Yapın!');
+                closeModal('cartModal');
+                openModal('authModal');
+                return;
+            }
+            alert('Siparişiniz başarıyla alındı! İndirme linkleri e-posta adresinize gönderilmiştir.');
+            cart = [];
+            document.getElementById('cartCount').innerText = 0;
+            closeModal('cartModal');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
