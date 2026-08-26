@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GamerWall | Premium Mağaza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* GELİŞMİŞ AYDINLIK (PREMIUM LIGHT) TEMA */
+        :root {
+            --bg-body: #f4f7fe; /* Hafif mavimsi ferah arka plan */
+            --bg-surface: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #4f46e5; /* İndigo / Morumsu Mavi */
+            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            --danger: #ef4444;
+            --success: #10b981;
+            --border: #e2e8f0;
+            --shadow-sm: 0 2px 4px rgba(148, 163, 184, 0.1);
+            --shadow-lg: 0 15px 30px rgba(148, 163, 184, 0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-body); color: var(--text-main); overflow-x: hidden; }
+        button { cursor: pointer; border: none; outline: none; background: none; color: inherit; }
+        a { text-decoration: none; color: inherit; }
+
+        /* HEADER & NAVBAR */
+        header { background-color: var(--bg-surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-sm); }
+        .navbar { max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+        
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; white-space: nowrap; }
+        .logo span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* ARAMA ÇUBUĞU - Mobilde gizlenecek, PC'de görünecek */
+        .search-bar { background: var(--bg-body); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px; flex: 1; max-width: 400px; transition: 0.3s; }
+        .search-bar:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        .search-bar input { background: none; border: none; outline: none; color: var(--text-main); width: 100%; font-size: 0.95rem; }
+
+        .nav-right { display: flex; align-items: center; gap: 15px; position: relative; }
+        .icon-btn { font-size: 1.4rem; position: relative; transition: 0.2s; color: var(--text-main); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-body); }
+        .icon-btn:hover { background: var(--border); color: var(--primary); }
+        .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--danger); color: white; font-size: 0.7rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-surface); }
+
+        /* PROFİL AÇILIR MENÜSÜ */
+        .profile-dropdown { position: absolute; top: 55px; right: 0; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; width: 180px; display: none; flex-direction: column; box-shadow: var(--shadow-lg); z-index: 1001; overflow: hidden; }
+        .profile-dropdown.open { display: flex; animation: fadeIn 0.2s ease-out; }
+        .profile-dropdown a { padding: 12px 15px; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; color: var(--text-main); transition: 0.2s; }
+        .profile-dropdown a:hover { background: var(--bg-body); color: var(--primary); padding-left: 20px; }
+
+        /* SAĞ SEPET */
+        .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh; background: var(--bg-surface); border-left: 1px solid var(--border); z-index: 2000; transition: right 0.3s ease; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        .cart-drawer.open { right: 0; }
+        .cart-header { padding: 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem; font-weight: 700; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-body); padding: 15px; border-radius: 12px; border: 1px solid var(--border); }
+        .cart-item-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 5px; }
+        .cart-item-price { color: var(--primary); font-weight: 700; }
+        .remove-btn { color: var(--danger); font-size: 1.2rem; padding: 5px; }
+        .cart-footer { padding: 20px; border-top: 1px solid var(--border); background: var(--bg-surface); }
+        .checkout-btn { width: 100%; background: var(--primary-gradient); color: white; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 600; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3); transition: 0.2s; }
+        .checkout-btn:active { transform: scale(0.98); }
+
+        /* MODAL (GİRİŞ YAP) & OVERLAY */
+        .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 1500; display: none; opacity: 0; transition: opacity 0.3s; }
+        .overlay.active { display: block; opacity: 1; }
+        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: var(--bg-surface); width: 90%; max-width: 400px; border-radius: 20px; z-index: 2000; padding: 30px; display: none; opacity: 0; transition: all 0.3s; box-shadow: var(--shadow-lg); }
+        .modal.open { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; font-size: 1.4rem; font-weight: 700; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+        .form-group input { width: 100%; background: var(--bg-body); border: 1px solid var(--border); color: var(--text-main); padding: 14px; border-radius: 12px; font-size: 1rem; outline: none; transition: 0.2s; }
+        .form-group input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        .modal-btn { width: 100%; background: var(--text-main); color: white; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 1.1rem; margin-top: 10px; transition: 0.2s; }
+        .modal-btn:active { transform: scale(0.98); }
+
+        /* ÜRÜN KARTLARI */
+        main { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .product-card { background: var(--bg-surface); border-radius: 20px; overflow: hidden; transition: 0.3s; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: #cbd5e1; }
+        .product-img { width: 100%; height: 200px; object-fit: cover; }
+        .product-info { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 5px; color: var(--text-main); }
+        .product-meta { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 500; }
+        .product-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .price { font-size: 1.3rem; font-weight: 800; color: var(--text-main); }
+        .add-btn { background: var(--bg-body); color: var(--primary); padding: 10px 18px; border-radius: 10px; font-weight: 600; transition: 0.2s; border: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+        .add-btn:hover { background: var(--primary-gradient); color: white; border: none; padding: 11px 19px; }
+        .add-btn:active { transform: scale(0.95); }
+
+        /* MOBİL UYUM (SİHİRLİ DOKUNUŞ BURADA) */
+        @media (max-width: 768px) {
+            .search-bar { display: none; } /* Mobilde devasa arama çubuğunu gizle */
+            .logo { font-size: 1.3rem; }
+            .icon-btn { width: 35px; height: 35px; font-size: 1.2rem; }
+            main { margin: 20px auto; }
+            .product-grid { gap: 15px; }
+            .profile-dropdown { right: -10px; top: 50px; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- GÖRÜNMEZ KARARTMA -->
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+    <!-- ÜST MENÜ -->
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">Gamer<span>Wall</span></a>
+            
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+                <input type="text" placeholder="Premium duvar kağıdı ara...">
+            </div>
+
+            <div class="nav-right">
+                <button class="icon-btn" onclick="handleProfileClick()" title="Hesabım">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="#"><i class="fa-solid fa-circle-user"></i> Profilim</a>
+                    <a href="#"><i class="fa-solid fa-box-open"></i> Siparişlerim</a>
+                    <a href="#" onclick="logout()" style="color: var(--danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
+                </div>
+
+                <button class="icon-btn" onclick="toggleCart()" title="Sepetim">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SAĞ SEPET PENCERESİ -->
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <span>Sepetim</span>
+            <button onclick="closeAll()" style="font-size: 1.5rem; color: var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div style="text-align: center; color: var(--text-muted); margin-top: 50px; font-weight: 500;">Sepetiniz şu an boş.</div>
+        </div>
+        <div class="cart-footer">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.2rem; font-weight: 800;">
+                <span>Toplam:</span>
+                <span id="cart-total" style="color: var(--primary);">0.00 ₺</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Güvenli Ödemeye Geç</button>
+        </div>
+    </div>
+
+    <!-- GİRİŞ YAP MODALI -->
+    <div class="modal" id="login-modal">
+        <div class="modal-header">
+            <span>Giriş Yap</span>
+            <button onclick="closeAll()" style="font-size: 1.5rem; color: var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="form-group">
+            <label>E-posta Adresi</label>
+            <input type="email" placeholder="ornek@mail.com">
+        </div>
+        <div class="form-group">
+            <label>Şifre</label>
+            <input type="password" placeholder="••••••••">
+        </div>
+        <button class="modal-btn" onclick="login()">Giriş Yap</button>
+    </div>
+
+    <!-- ÜRÜNLER -->
+    <main>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?q=80&w=600" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">CS2 Dust 2 Pro Edition</h3>
+                    <span class="product-meta">4K Ultra HD • PNG Format</span>
+                    <div class="product-bottom">
+                        <span class="price">39.99 ₺</span>
+                        <button class="add-btn" onclick="addToCart('CS2 Dust 2 Pro', 39.99)"><i class="fa-solid fa-plus"></i> Ekle</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">MSI 180Hz Neon Tema</h3>
+                    <span class="product-meta">Canlı (Live) • MP4 Format</span>
+                    <div class="product-bottom">
+                        <span class="price">49.99 ₺</span>
+                        <button class="add-btn" onclick="addToCart('MSI Neon Tema', 49.99)"><i class="fa-solid fa-plus"></i> Ekle</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1614315585042-371286395dc6?q=80&w=600" class="product-img">
+                <div class="product-info">
+                    <h3 class="product-title">Kırmızı Donanım Setup</h3>
+                    <span class="product-meta">8K Çözünürlük • JPG Format</span>
+                    <div class="product-bottom">
+                        <span class="price">29.99 ₺</span>
+                        <button class="add-btn" onclick="addToCart('Kırmızı Setup', 29.99)"><i class="fa-solid fa-plus"></i> Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BASİT VE KESİN ÇALIŞAN JS -->
+    <script>
+        let isLoggedIn = false;
+        let cart = [];
+
+        function getEl(id) { return document.getElementById(id); }
+
+        function closeAll() {
+            getEl('cart-drawer').classList.remove('open');
+            getEl('login-modal').classList.remove('open');
+            getEl('profile-dropdown').classList.remove('open');
+            getEl('overlay').classList.remove('active');
+        }
+
+        function toggleCart() {
+            let cartEl = getEl('cart-drawer');
+            if(cartEl.classList.contains('open')){
+                closeAll();
+            } else {
+                closeAll();
+                cartEl.classList.add('open');
+                getEl('overlay').classList.add('active');
+            }
+        }
+
+        function handleProfileClick() {
+            let profileEl = getEl('profile-dropdown');
+            if (!isLoggedIn) {
+                closeAll();
+                getEl('login-modal').classList.add('open');
+                getEl('overlay').classList.add('active');
+            } else {
+                if(profileEl.classList.contains('open')){
+                    profileEl.classList.remove('open');
+                } else {
+                    closeAll();
+                    profileEl.classList.add('open');
+                }
+            }
+        }
+
+        function login() {
+            isLoggedIn = true;
+            closeAll();
+            alert("Giriş Başarılı! Artık sepete ürün ekleyebilirsiniz.");
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            closeAll();
+            alert("Çıkış yapıldı.");
+        }
+
+        function addToCart(title, price) {
+            if (!isLoggedIn) {
+                handleProfileClick();
+                return;
+            }
+            cart.push({ id: Date.now(), title: title, price: price });
+            updateCartUI();
+            alert(title + " sepete eklendi!");
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(function(item) { return item.id !== id; });
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            getEl('cart-count').innerText = cart.length;
+            const container = getEl('cart-items');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--text-muted); margin-top: 50px; font-weight: 500;">Sepetiniz şu an boş.</div>';
+                getEl('cart-total').innerText = "0.00 ₺";
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            for(let i=0; i<cart.length; i++) {
+                let item = cart[i];
+                total += item.price;
+                html += '<div class="cart-item">' +
+                            '<div>' +
+                                '<div class="cart-item-title">' + item.title + '</div>' +
+                                '<div class="cart-item-price">' + item.price.toFixed(2) + ' ₺</div>' +
+                            '</div>' +
+                            '<button class="remove-btn" onclick="removeFromCart(' + item.id + ')"><i class="fa-solid fa-trash"></i></button>' +
+                        '</div>';
+            }
+            
+            container.innerHTML = html;
+            getEl('cart-total').innerText = total.toFixed(2) + " ₺";
+        }
+
+        function checkout() {
+            if(cart.length === 0) {
+                alert("Önce sepetinize ürün eklemelisiniz.");
+            } else {
+                alert("Ödeme sayfasına yönlendiriliyorsunuz...");
+            }
+        }
+    </script>
+</body>
+</html>
